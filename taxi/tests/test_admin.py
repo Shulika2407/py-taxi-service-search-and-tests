@@ -14,7 +14,7 @@ class AdminTest(TestCase):
         self.author = get_user_model().objects.create_superuser(
             username="author",
             password="testauthor",
-            license_number="AAA1111",)
+            license_number="AAA11111",)
 
     def test_author_license_number(self):
         url = reverse("admin:taxi_driver_changelist")
