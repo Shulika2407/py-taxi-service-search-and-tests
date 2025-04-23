@@ -10,6 +10,7 @@ Manufacturer_Format_URL = reverse("taxi:manufacturer-list")
 Driver_Format_URL = reverse("taxi:driver-list")
 Car_Format_URL = reverse("taxi:car-list")
 
+
 class PublicViewsTest(TestCase):
     def test_login_required_for_manufacturer_and_driver(self):
         urls = [
@@ -68,7 +69,8 @@ class PrivateDriverTest(TestCase):
             "last_name": "Test Last",
             "license_number": "DFG15923",
         }
-        self.client.post(reverse("taxi:driver-create"), data=form_data)
+        res = self.client.post(reverse("taxi:driver-create"), data=form_data)
+        self.assertEqual(res.status_code, 302)
         new_user = get_user_model().objects.get(username=form_data["username"])
         self.assertEqual(new_user.first_name, form_data["first_name"])
         self.assertEqual(new_user.last_name, form_data["last_name"])
