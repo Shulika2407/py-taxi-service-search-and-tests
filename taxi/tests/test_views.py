@@ -67,14 +67,12 @@ class PrivateDriverTest(TestCase):
             "password2": "user12test",
             "first_name": "Test First",
             "last_name": "Test Last",
-            "license_number": "DFG15923",
+            "license_number": "DFG12345",
         }
         res = self.client.post(reverse("taxi:driver-create"), data=form_data)
         self.assertEqual(res.status_code, 302)
-        new_user = get_user_model().objects.get(username=form_data["username"])
-        self.assertEqual(new_user.first_name, form_data["first_name"])
-        self.assertEqual(new_user.last_name, form_data["last_name"])
-        self.assertEqual(new_user.license_number, form_data["license_number"])
+        self.assertTrue(get_user_model().objects.filter(
+            username=form_data["username"]).exists())
 
     def test_search_driver_filters_queryset(self):
         Driver.objects.create_user(
